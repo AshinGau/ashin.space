@@ -13,7 +13,7 @@ var app = express();//返回express对象
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));//设置视图
 app.set('view engine', 'jade');//设置视图引擎
-app.set('port', process.env.PORT || 3000); // 设定监听端口 set PORT = 3000
+app.set('port', process.env.PORT || 80); // 设定监听端口 set PORT = 3000
 app.locals.pretty = false;
 
 // uncomment after placing your favicon in /public

@@ -25,7 +25,7 @@
 			dataType: 'json',//ajax dataType
 			fileName: 'pithyUpload',
 			trigger: null,//null or 'change'
-			//callbacks - if IE, only onNewFile onUploadSuccess, onUploadError, onComplete
+			//callbacks - if IE, only onNewFile, onComplete
 			onNewFile: function () { },
 			onComplete: function () { },
 			onUploadProgress: function () { },
@@ -43,7 +43,7 @@
 		function upload_file() {
 			if (this._pos >= this.files.length) {
 				this._pos = 0;
-				opts.onComplete.call($(this));
+				opts.onComplete.call(this);
 				return;
 			}
 
@@ -54,7 +54,7 @@
 			//check file type
 			if (typeReg)
 				if (!typeReg.test(this.files[this._pos].name)) {
-					opts.onFileTypeError.call($(this), this.files[this._pos]);
+					opts.onFileTypeError.call(this, this.files[this._pos]);
 					this._pos++;
 					typeTest = false;
 					upload_file.call(this);
@@ -63,7 +63,7 @@
 			//check file size
 			if (opts.maxFileSize)
 				if (opts.maxFileSize < this.files[this._pos].size) {
-					opts.onFileSizeError.call($(this), this.files[this._pos]);
+					opts.onFileSizeError.call(this, this.files[this._pos]);
 					this._pos++;
 					sizeTest = false;
 					upload_file.call(this);
@@ -75,7 +75,7 @@
 					$self = $(this),
 					file = self.files[self._pos],
 					fd = new FormData();
-				opts.onNewFile.call($self, file, opts);
+				opts.onNewFile.call(self, file, opts);
 				for (var key in opts.extData)
 					fd.append(key, opts.extData[key]);
 				fd.append(opts.fileName, file);
@@ -99,16 +99,16 @@
 								if (event.lengthComputable) {
 									percent = Math.ceil(position / total * 100);
 								}
-								opts.onUploadProgress.call($self, file, percent);
+								opts.onUploadProgress.call(self, file, percent);
 							}, false);
 						}
 						return xhrobj;
 					},
 					success: function (data, textStatus, xhr) {
-						opts.onUploadSuccess.call($self, file, data, textStatus, xhr);
+						opts.onUploadSuccess.call(self, file, data, textStatus, xhr);
 					},
 					error: function (xhr, textStatus, errorThrown) {
-						opts.onUploadError.call($self, file, xhr, textStatus, errorThrown);
+						opts.onUploadError.call(self, file, xhr, textStatus, errorThrown);
 					},
 					complete: function (xhr, textStatus) {
 						self._pos++;
@@ -139,7 +139,7 @@
 							.val(opts.extData[key])
 					);
 				$input.change(function () {
-					opts.onNewFile.call($self, this.value);
+					opts.onNewFile.call(self, this.value);
 					$form.submit();
 					$iframe._upload_read = true;
 				});
@@ -147,6 +147,7 @@
 					if(!$iframe._upload_read)
 						return;
 					var contents = $(this).contents().get(0);
+					console.log(contents);
 					var data = $(contents).find('body').text();
 					if ('json' == opts.dataType) {
 						data = window.eval('(' + data + ')');
@@ -159,7 +160,7 @@
 			} else {
 				if (opts.maxFiles)
 					if (opts.maxFiles < this.files.length) {
-						opts.onFilesMaxError.call($(this), this.files);
+						opts.onFilesMaxError.call(this, this.files);
 						return;
 					}
 				self._pos = 0;

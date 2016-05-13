@@ -1,0 +1,100 @@
+include ../assets/mixins/ashin-mixins
+
+doctype
+html(xmlns="http://www.w3.org/1999/xhtml")
+	head
+		include ../assets/include/ashin-link
+		include ../assets/include/ie_patch
+		script(type="text/javascript",src="/script/plugins/jquery.pithyUpload.min.js")
+		style(type='text/css').
+			.input-label{
+				display: block;
+				width: 100%;
+				height: 100%;
+				cursor: pointer;
+				color: #00d6b7;
+				text-align: center;
+			}
+			.input-label:hover{
+				color: #008a76;
+				text-decoration: underline;
+			}
+			#uploadedFiles .file-name{
+				line-height: 30px;
+			}
+			#uploadedFiles .progress-bar{
+				transition: width 0.3s;
+				-moz-transition: width 0.3s; /* Firefox 4 */
+				-webkit-transition: width 0.3s; /* Safari and Chrome */
+				-o-transition: width 0.3s; /* Opera */
+			}
+		script(type="text/javascript").
+			$(function(){
+				var $uploadedFiles = $('#uploadedFiles'),
+					$fileModel = $uploadedFiles.find('.list-group-item');
+				
+				$('#pithyUpload').pithyUpload({
+					trigger: 'change',
+					dataType: 'text',
+					allowedTypes: ["gif", "jpeg", "jpg", "bmp", "png", "mp4"],
+					maxFiles: 8,
+					maxFileSize: 10 * 1024 * 1024,
+					onNewFile: function (file) { 
+						file.$file = $fileModel.clone(false).removeClass('hide'),
+						file.$file_name = file.$file.find('.file-name').text('file: ' + file.name),
+						file.$file_progress = file.$file.find('.progress-bar').css('width','0%').text('0%');
+						$uploadedFiles.prepend(file.$file);
+					},
+					onComplete: function (data) { 
+						console.log(this);
+					},
+					onUploadProgress: function (file, percent) { 
+						file.$file_progress.css('width', percent + '%').text(percent + '%');
+					},
+					onUploadSuccess: function (file, data, status, xhr) { 
+						file.$file_progress.css('width', '100%').text('100% success').addClass('progress-bar-success');
+					},
+					onUploadError: function (file, xhr, status, err) {
+						file.$file_progress.css('width', '100%').text('fail').addClass('progress-bar-danger');
+					 },
+					onFileTypeError: function (file) {
+						file.$file = $fileModel.clone(false).removeClass('hide'),
+						file.$file_name = file.$file.find('.file-name').text('file: ' + file.name),
+						file.$file_progress = file.$file.find('.progress-bar').css('width','100%').text('type error').addClass('progress-bar-warning');
+						$uploadedFiles.prepend(file.$file);
+					 },
+					onFileSizeError: function (file) { 
+						file.$file = $fileModel.clone(false).removeClass('hide'),
+						file.$file_name = file.$file.find('.file-name').text('file: ' + file.name),
+						file.$file_progress = file.$file.find('.progress-bar').css('width','100%').text('size error').addClass('progress-bar-warning');
+						$uploadedFiles.prepend(file.$file);
+					},
+					onFilesMaxError: function (file) { 
+						jk.alert({
+							title: 'Error',
+							msg: 'No more than 8 files'
+						});
+					}
+				})
+			});
+	body
+		.jumbotron
+			.container
+				h1 jquery.pithyUpload.js
+				p jQuery Ajax File uploader with progress bar, and Compatible with IE browser of lower version via iframe.
+		.container: .row: .col-sm-14
+			.panel.panel-default.panel-stress.interval
+				.panel-heading 
+					input.hide.form-control(type='file',name='pithyUpload',id='pithyUpload',multiple='multiple')
+					label.input-label(for='pithyUpload') >> UPLOADE FILES <<
+				.panel-body
+					ul#uploadedFiles.list-group.list-group-condense
+						li.list-group-item.hide
+							.row.file-name
+							.row
+								.progress
+									.progress-bar.progress-bar-striped(style='min-width:3em')
+		+ashin_footer
+		a(href='https://github.com/AshinGau/pithyUpload')
+			img(src='/img/ashin/bg/forkme.png',style='position: absolute; top: 0; right: 0; border: 0;',alt='form me on github')
+		include ../assets/include/alert.jade
