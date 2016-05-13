@@ -1,0 +1,63 @@
+﻿include ../assets/mixins/ashin-mixins
+
+doctype
+html(xmlns="http://www.w3.org/1999/xhtml")
+	head
+		include ../assets/include/ashin-link
+		include ../assets/include/ie_patch
+		script(type="text/javascript").
+			$(function(){				
+				var letter_bg = ["bg-success", "bg-danger", "bg-primary"];
+				$('.ashin-letter').each(function(){
+					var $letter = $(this),
+						letter_content = $letter.next().text().charAt(0).toUpperCase(),
+						letter_bg_style = letter_bg[Math.floor(Math.random() * 3)];
+					$letter.addClass(letter_bg_style).text(letter_content);
+				})
+			})
+	body.bg-gray
+		+ashin_navbar(0)
+		.jumbotron
+			.container
+				h1 Ashin.space
+				p 阿xin的空间，我们相互学习和求教，分享和快乐就在这个地方。
+		.container
+			.row
+				.col-sm-14: .gutter-right
+					.panel.panel-default.interval
+						.panel-heading
+							|心情日志
+							a.pull-right(href='#') 查看更多>>
+						.panel-body
+							ul.list-group.list-group-pure
+								li.list-group-item
+									a.link-default(href='#') css&js框架 nano.bootstrap.css
+									span.msg-info
+										span.icon.text-icon.icon-clock &nbsp;
+										span 2016-1-12 20:40									
+					.panel.panel-default.interval#ashin-hot-views
+						.panel-heading
+							|热度浏览
+							a.pull-right(href='#') 查看更多>>
+						.panel-body
+							ul.list-group.list-group-pure
+								li.list-group-item
+									a.link-default(href='#') css&js框架 nano.bootstrap.css
+									span.msg-info
+										span.icon.text-icon.icon-view(title='浏览') &nbsp;
+										span 浏览36
+										span.icon.text-icon.icon-msg(title='评论') &nbsp;
+										span 6									
+				.col-sm-6
+					.panel.panel-default.panel-stress
+						.panel-heading
+							|兴趣作品
+							a.pull-right(href='#') 查看更多>>
+						.panel-body
+							ul.list-group.list-group-condense
+								li.list-group-item
+									.row
+										span.ashin-letter.bg-primary
+										a.link-default(href='/nano/css.html') nano.bootstrap.css
+									.row css&js框架——丰富的样式，平面化风格，更好的兼容性。修改bootstrap有详细的文档说明，增添的样式有更方便的运。
+		+ashin_footer

@@ -1,0 +1,71 @@
+mixin ashin_navbar(active_index)
+	nav.navbar.navbar-default#ashin-navbar: #ashin-navbar-container
+		.container-fluid
+			.navbar-header
+				button.navbar-toggle.collapsed(type='button',data-toggle='collapse',data-target='#ashin-navbar-collapse',aria-expanded='false')
+					span.sr-only ashin.space navigation
+					span.icon-bar
+					span.icon-bar
+					span.icon-bar
+				a.navbar-brand(href='http://www.ashin.space'): img(src='/img/ashin/icon/ashin.space.png')
+			.navbar-collapse.collapse#ashin-navbar-collapse
+				form.navbar-form.navbar-left(role='search')
+					.form-group.form-group-sm.has-feedback
+						input.form-control.metro(type='text',placeholder='搜索相关内容...')
+						span.icon.icon-search.form-control-feedback
+				ul.nav.navbar-nav.navbar-right
+					if active_index == 0
+						li.active
+							a#ashin-home(href='/')
+								span.icon.text-icon.icon-home-primary &nbsp;
+								span Ashin
+					else
+						li
+							a#ashin-home(href='/')
+								span.icon.text-icon.icon-home-primary &nbsp;
+								span Ashin
+					if active_index == 1
+						li.active
+							a#ashin-log(href='/log')
+								span.icon.text-icon.icon-register-primary &nbsp;
+								span 日志
+					else
+						li
+							a#ashin-log(href='/log')
+								span.icon.text-icon.icon-register-primary &nbsp;
+								span 日志
+					if active_index == 2
+						li.active
+							a#ashin-works(href='/works')
+								span.icon.text-icon.icon-works-primary &nbsp;
+								span 作品
+					else
+						li
+							a#ashin-works(href='/works')
+								span.icon.text-icon.icon-works-primary &nbsp;
+								span 作品
+					if active_index == 3
+						li.active
+							a#ashin-manager(href='/manager')
+								span.icon.text-icon.icon-manager-primary &nbsp;
+								span 管理员
+					else
+						li
+							a#ashin-manager(href='/manager')
+								span.icon.text-icon.icon-manager-primary &nbsp;
+								span 管理员
+					li.dropdown
+						a.dropdown-toggle(href='#',data-toggle='dropdown',role='button',aria-haspopup='true',aria-expanded='false')
+							span.icon.text-icon.icon-contact-primary &nbsp;
+							span Contact
+							span.caret
+						ul.menu-vertical.menu-default.menu-separate#ashin-contact-menu
+							li: a.icon.icon-weibo(href='http://weibo.com/u/3264012480',target='_blank') 微博
+							li: a.icon.icon-github(href='https://github.com/helloxiyue',target='_blank') github
+							li: a.icon.icon-csdn(href='http://blog.csdn.net/helloxiyue/',target='_blank') CSDN
+							
+mixin ashin_footer
+	.footer-assist
+	.footer
+		p: a(href='http://www.ashin.space') www.ashin.space
+		p 阿xin的空间powered by node.js

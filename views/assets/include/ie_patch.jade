@@ -1,0 +1,10 @@
+|<!--[if lt IE 9]>
+link(type='text/css',rel='stylesheet',href='/css/nano-bootstrap.patch.css')
+script(type='text/javascript').
+	if (!Array.prototype.forEach) {
+		Array.prototype.forEach = function(callback, thisArg){}
+	}
+	if(!window.addEventListener){
+		window.addEventListener = function(a, b, c){}
+	}
+|<![endif]-->
