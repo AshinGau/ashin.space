@@ -128,7 +128,7 @@
 						.attr('name', 'pithyUploadForm')
 						.attr("target", 'pithyUploadIframe')
 						.attr('action', opts.url),
-					$input = $('<input type="file"/>'),
+					$input = $('<input type="file"/>').attr('name', opts.fileName),
 					$hidden = $('<input type="hidden"/>');
 				$iframe._upload_read = false;
 				$('body').append($iframe).append($form.append($input));

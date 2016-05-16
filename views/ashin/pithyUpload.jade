@@ -5,7 +5,7 @@ html(xmlns="http://www.w3.org/1999/xhtml")
 	head
 		include ../assets/include/ashin-link
 		include ../assets/include/ie_patch
-		script(type="text/javascript",src="/script/plugins/jquery.pithyUpload.min.js")
+		script(type="text/javascript",src="/script/plugins/jquery.pithyUpload.js")
 		style(type='text/css').
 			.input-label{
 				display: block;
@@ -31,9 +31,13 @@ html(xmlns="http://www.w3.org/1999/xhtml")
 		script(type="text/javascript").
 			$(function(){
 				var $uploadedFiles = $('#uploadedFiles'),
-					$fileModel = $uploadedFiles.find('.list-group-item');
+					$fileModel = $uploadedFiles.find('.list-group-item.hide');
 				
 				$('#pithyUpload').pithyUpload({
+					extData: {
+						userid: 'Ashin',
+						userpwd: 'Gau'
+					},
 					trigger: 'change',
 					dataType: 'text',
 					allowedTypes: ["gif", "jpeg", "jpg", "bmp", "png", "mp4"],
@@ -94,6 +98,8 @@ html(xmlns="http://www.w3.org/1999/xhtml")
 							.row
 								.progress
 									.progress-bar.progress-bar-striped(style='min-width:3em')
+						li.list-group-item
+							.row(style='font-size:16px;line-height:1.6em;') I have recently been in a project using javascript asynchronous file uploader. However, plugins searched in internet are neithor compatible with IE nor convenient in use. Moreover, these plugins are dependent on HTML/CSS settings excessively that logic and views are mixed. Therefore, I write this plugin which is neat(only 3KB) and compatible(support down to IE8).
 		+ashin_footer
 		a(href='https://github.com/AshinGau/pithyUpload')
 			img(src='/img/ashin/bg/forkme.png',style='position: absolute; top: 0; right: 0; border: 0;',alt='form me on github')
