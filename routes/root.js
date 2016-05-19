@@ -24,4 +24,10 @@ router.post('/pithyUpload', function (req, res) {
     res.send("success");
 });
 
+router.get('/uploadPreview', function (req, res) {
+    res.render('ashin/uploadPreview', {
+        'webTitle':'uploadPreview'
+    });
+});
+
 module.exports = router;
